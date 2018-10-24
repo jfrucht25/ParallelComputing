@@ -9,8 +9,8 @@
 
 #include "mpi.h"
 
-#define COLS 600
-#define ROWS 600
+#define COLS 1000
+#define ROWS 1000
 #define TRIALS 128
 #define DIFFERENT_P 100
 
@@ -84,6 +84,7 @@ int rear(struct Queue* queue)
     return queue->array[queue->rear]; 
 } 
 
+struct Queue* queue;
 
 void print_grid(char a[ROWS][COLS]){
 	for(int i=0; i < ROWS; i++){
@@ -111,7 +112,6 @@ int run_fire(double p){
 			else grid[i][j] = '.';
 		}
         }
-	struct Queue* queue = createQueue(COLS*ROWS);
 	for(int i = 0; i<ROWS; i++){
 		if(grid[i][0] == 'T'){
 			grid[i][0] = '*';
@@ -147,7 +147,6 @@ int run_fire(double p){
 	return steps;
 }
 
-struct Queue* queue;
 
 int main(int argc, char* argv[]){
 	int rank;

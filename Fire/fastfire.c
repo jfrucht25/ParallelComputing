@@ -7,8 +7,8 @@
 #include <time.h>
 #include <limits.h>
 
-#define COLS 600
-#define ROWS 600
+#define COLS 1000
+#define ROWS 1000
 #define TRIALS 128
 #define DIFFERENT_P 100
 
