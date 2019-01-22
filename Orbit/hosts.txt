@@ -1,0 +1,6 @@
+localhost slots=4
+stallman slots=8
+thompson slots=8
+wall slots=7
+sonic slots=3
+DonkeyKong slots=4

@@ -9,9 +9,9 @@
 
 #include "mpi.h"
 
-#define COLS 500
-#define ROWS 500
-#define TRIALS 100
+#define COLS 1000
+#define ROWS 1000
+#define TRIALS 128
 #define DIFFERENT_P 100
 
 
@@ -110,6 +110,7 @@ int run_fire(double p){
                 	double v = rand() * 1.0 / RAND_MAX;
 			if(v < p) grid[i][j] = 'T';
 			else grid[i][j] = '.';
+			createQueue(99999999);
 		}
         }
 	for(int i = 0; i<ROWS; i++){
@@ -155,7 +156,6 @@ int main(int argc, char* argv[]){
 	int tag = 0;
 	double p;
 	int sum;
-	double end = -1;
 	int result;
 	MPI_Init(&argc, &argv) ;
 	MPI_Comm_size( MPI_COMM_WORLD , &size ) ;
@@ -170,26 +170,24 @@ int main(int argc, char* argv[]){
 			p = (i*1.0)/(DIFFERENT_P);
 			sum = 0;
 			result = 0;
-			for(int j=0; j<TRIALS; j++){
-				MPI_Send(&p, 1, MPI_DOUBLE, j%(size-1)+1, tag, MPI_COMM_WORLD);
+			for(int k=0; k<TRIALS/(size-1); k++){
+				for(int j=1; j<size; j++){
+					MPI_Send(&p, 1, MPI_DOUBLE, j, tag, MPI_COMM_WORLD);
+				}
 			}
-			for(int j=0; j<TRIALS; j++){
-				MPI_Recv(&result, 1, MPI_INT, MPI_ANY_SOURCE, tag, MPI_COMM_WORLD, &status);
-				sum+=result;
+			for(int k=0; k<TRIALS/(size-1); k++){
+				for(int j=1; j<size; j++){
+					MPI_Recv(&result, 1, MPI_INT, MPI_ANY_SOURCE, tag, MPI_COMM_WORLD, &status);
+					sum+=result;
+				}
 			}
 			double avg = (sum*1.0)/TRIALS/COLS;
 			printf("%f\t%f\n", p, avg);
 		}
-		for(int j=1; j<size; j++){
-			MPI_Send(&end, 1, MPI_DOUBLE, j, tag, MPI_COMM_WORLD);
-		}
 	}
 	else{
-		while(1){
+		for(int i=0; i<(TRIALS/(size-1))*DIFFERENT_P; i++){
 			MPI_Recv(&p, 1, MPI_DOUBLE, 0, tag, MPI_COMM_WORLD, &status);
-			if(p==-1){
-				break;
-			}
 			result = run_fire(p);
 			MPI_Send(&result, 1, MPI_INT, 0, tag, MPI_COMM_WORLD);
 		}
