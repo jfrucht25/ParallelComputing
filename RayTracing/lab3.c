@@ -78,8 +78,8 @@ int main(void)
                         currentClosest = time;
                         if(i==0){
 							triple point = add(mult(ray,currentClosest),e);
-							int a = (int)(point.x/50);
-							int b = (int)(point.z/50);
+							int a = floor(point.x/50);
+							int b = floor(point.z/50);
 							if((a+b)%2==0){
 								rgb[y][x][0] = spheres[i].h.r/2;
 								rgb[y][x][1] = spheres[i].h.g/2;
