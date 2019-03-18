@@ -11,7 +11,7 @@
 //
 void scale(sphere a[]){
     for(int i=0; i<SIZE; i++){
-        a[i].c.x = a[i].c.x*N+106;
+        a[i].c.x = a[i].c.x*N+108;
         a[i].c.y = a[i].c.y*N;
         a[i].c.z = a[i].c.z*N;
         a[i].r   =  a[i].r*N;

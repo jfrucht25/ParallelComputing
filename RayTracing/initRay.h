@@ -43,9 +43,9 @@ triple add(triple u, triple v)
 {
 	triple t;
     t.x = u.x + v.x ;
-   t.y = u.y + v.y ;
-   t.z = u.z + v.z ;
-   return t;
+	t.y = u.y + v.y ;
+	t.z = u.z + v.z ;
+	return t;
 }
 triple mult(triple t, double f){
     triple out = {t.x*f,t.y*f,t.z*f};
