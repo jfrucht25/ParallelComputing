@@ -285,7 +285,7 @@ int main(int argc, char *argv[]){
 				rgb[i][j][1]=c.g;
 				rgb[i][j][2]=c.b;
 				
-				printf("completed (%d,%d)\n", i,j);
+//				printf("completed (%d,%d)\n", i,j);
 			}
 	}
 	
